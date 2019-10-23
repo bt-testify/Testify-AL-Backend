@@ -1,5 +1,6 @@
 # Back-End Documentation for Testify API
 
+
 POST Register new user: `https://testify-backend.herokuapp.com/api/auth/register`
 
 POST Login new user: `https://testify-backend.herokuapp.com/api/auth/login`
@@ -17,7 +18,7 @@ GET Users: `https://testify-backend.herokuapp.com/api/users/`
 
 GET User by ID: `https://testify-backend.herokuapp.com/api/users/1`
 
-GET a llist of all tests `https://testify-backend.herokuapp.com/api/tests/`
+GET a list of all tests `https://testify-backend.herokuapp.com/api/tests/`
 GET a test by test id `https://testify-backend.herokuapp.com/api/tests/1`
 
 POST New Test `https://testify-backend.herokuapp.com/api/tests/`
@@ -77,4 +78,44 @@ Will return a success message
 {
     "message": "Test deleted."
 }
+```
+
+POST an array of test question objects `https://testify-backend.herokuapp.com/api/questions`
+
+```
+[
+{
+	"text": "what is 2 x 2?",
+	"test_id": 2
+},
+{
+	"text": "what is 2 x 3?",
+	"test_id": 2
+}
+]
+```
+
+POST an array of answers objects `https://testify-backend.herokuapp.com/api/answers`
+
+```
+[
+    {
+        "id": 1,
+        "option": "4",
+        "isCorrect": 1,
+        "question_id": 1
+    },
+    {
+        "id": 2,
+        "option": "6",
+        "isCorrect": 0,
+        "question_id": 1
+    },
+    {
+        "id": 3,
+        "option": "8",
+        "isCorrect": 0,
+        "question_id": 1
+    }
+]
 ```
