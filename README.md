@@ -13,3 +13,7 @@ Requires a request object that has username and password attributes of string da
 }
 ```
 
+GET Users: `https://testify-backend.herokuapp.com/api/users/`
+
+GET User by ID: `https://testify-backend.herokuapp.com/api/users/1`
+
