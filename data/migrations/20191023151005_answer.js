@@ -4,7 +4,6 @@ exports.up = function (knex) {
         answer.increments();
 
         answer.string('option', 500)
-            .notNullable();
 
         answer.boolean('isCorrect')
 

@@ -4,7 +4,6 @@ exports.up = function (knex) {
         test.increments();
 
         test.string('title', 128)
-            .notNullable();
 
         test.integer('score');
 

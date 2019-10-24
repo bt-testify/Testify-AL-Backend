@@ -1,44 +1,36 @@
 const router = require("express").Router();
 
-const Tests = require("./tests-model.js");
-const Questions = require("../questions/questions-model.js");
+const Answers = require("./answers-model.js");
 
 
 router.get("/", (req, res) => {
-    Tests.find()
-        .then(tests => {
-            res.status(200).json(tests);
+    Answers.find()
+        .then(answers => {
+            res.status(200).json(answers);
         })
         .catch(err => {
             res.status(500).json({ err });
         });
 });
 
-router.get("/:id", verifyTestId, async (req, res) => {
+router.get("/:id", verifyTestId, (req, res) => {
+    const id = req.params.id;
 
-    try {
-        const id = req.params.id;
-        const test = await Tests.findById(id)
-        test.questions = await Tests.getQuestionsByTest(id)
-        Promise.all(test.questions.map(async question => {
-            const answers = await Questions.getAnswersByQuestion(question.id)
-            question.answers = answers;
-            return question;
-        })).then(questions => {
-            res.status(200).json({ test })
+    Answers.findById(id)
+        .then(answer => {
+            res.status(200).json(answer);
         })
-
-    } catch (err) {
-        res.status(500).json({ err });
-    }
+        .catch(err => {
+            res.status(500).json({ err });
+        });
 });
 
 router.post("/", (req, res) => {
-    let test = req.body;
+    let answer = req.body;
 
-    Tests.add(test)
-        .then(newTest => {
-            res.status(201).json({ newTest })
+    Answers.add(answer)
+        .then(newAnswer => {
+            res.status(201).json(newAnswer)
         })
 })
 
@@ -46,7 +38,7 @@ router.put("/:id", verifyTestId, (req, res) => {
     const id = req.params.id;
     const changes = req.body;
 
-    Tests.update(id, changes)
+    Answers.update(id, changes)
         .then(updatedTest => {
             res.status(201).json(updatedTest);
         })
@@ -59,9 +51,9 @@ router.put("/:id", verifyTestId, (req, res) => {
 router.delete("/:id", verifyTestId, (req, res) => {
     const id = req.params.id;
 
-    Tests.remove(id)
+    Answers.remove(id)
         .then(deleted => {
-            res.status(200).json({ message: "Test deleted." });
+            res.status(200).json({ message: "Answer deleted." });
         })
         .catch(err => {
             res.status(500).json({ err });
@@ -73,7 +65,7 @@ router.delete("/:id", verifyTestId, (req, res) => {
 function verifyTestId(req, res, next) {
     const id = req.params.id;
 
-    Tests.findById(id)
+    Answers.findById(id)
         .then(item => {
             if (item) {
                 req.item = item;

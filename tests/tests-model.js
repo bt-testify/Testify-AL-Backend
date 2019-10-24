@@ -6,11 +6,15 @@ module.exports = {
     findBy,
     findById,
     update,
-    remove
+    remove,
+    getQuestionsByTest
 };
 
 function find() {
-    return db("test");
+    return db("test")
+        .join("user", "test.user_id", "user.id")
+        .select("test.id", "test.title", "test.score", "test.created_at", "test.user_id",
+            "user.username", "user.name")
 }
 
 function findBy(filter) {
@@ -41,4 +45,8 @@ function remove(id) {
     return db("test")
         .where({ id })
         .del();
+}
+
+function getQuestionsByTest(id) {
+    return db("question").where({ "test_id": id });
 }
