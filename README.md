@@ -294,16 +294,19 @@ Will allow for text and test_id fields to be updated
 ```
 [
 {
-	"text": "What is 1 + 2",
-	"test_id": 1
+	"option": "3",
+	"isCorrect": true,
+	"question_id": 1
 },
 {
-	"text": "What is 7 * 4",
-	"test_id": 1
+	"option": "2",
+	"isCorrect": false,
+	"question_id": 1
 },
 {
-	"text": "What is 18 / 2",
-	"test_id": 1
+	"option": "1",
+	"isCorrect": false,
+	"question_id": 1
 }
 ]
 ```
