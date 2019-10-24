@@ -6,7 +6,8 @@ module.exports = {
     findBy,
     findById,
     update,
-    remove
+    remove,
+    getAnswersByQuestion
 };
 
 function find() {
@@ -41,4 +42,8 @@ function remove(id) {
     return db("question")
         .where({ id })
         .del();
+}
+
+function getAnswersByQuestion(id) {
+    return db("answer").where({ "question_id": id });
 }

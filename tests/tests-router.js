@@ -1,6 +1,7 @@
 const router = require("express").Router();
 
 const Tests = require("./tests-model.js");
+const Questions = require("../questions/questions-model.js");
 
 
 router.get("/", (req, res) => {
@@ -13,16 +14,23 @@ router.get("/", (req, res) => {
         });
 });
 
-router.get("/:id", verifyTestId, (req, res) => {
-    const id = req.params.id;
+router.get("/:id", verifyTestId, async (req, res) => {
 
-    Tests.findById(id)
-        .then(test => {
-            res.status(200).json(test);
+    try {
+        const id = req.params.id;
+        const test = await Tests.findById(id)
+        test.questions = await Tests.getQuestionsByTest(id)
+        Promise.all(test.questions.map(async question => {
+            const answers = await Questions.getAnswersByQuestion(question.id)
+            question.answers = answers;
+            return question;
+        })).then(questions => {
+            res.status(200).json({ test })
         })
-        .catch(err => {
-            res.status(500).json({ err });
-        });
+
+    } catch (err) {
+        res.status(500).json({ err });
+    }
 });
 
 router.post("/", (req, res) => {

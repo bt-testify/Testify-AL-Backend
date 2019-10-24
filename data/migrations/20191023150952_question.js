@@ -4,7 +4,6 @@ exports.up = function (knex) {
         question.increments();
 
         question.string('text', 500)
-            .notNullable();
 
         question.integer('test_id')
             .notNullable()

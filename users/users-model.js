@@ -4,7 +4,8 @@ module.exports = {
     add,
     find,
     findBy,
-    findById
+    findById,
+    getTestsByUser
 };
 
 function find() {
@@ -25,4 +26,8 @@ function findById(id) {
     return db("user")
         .where({ id })
         .first();
+}
+
+function getTestsByUser(id) {
+    return db("test").where({ "user_id": id });
 }
